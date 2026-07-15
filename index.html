@@ -296,12 +296,11 @@
   </section>
 
   <div class="senden">
-    <h2>Fertig? Dann zurück an Henrik.</h2>
+    <h2>Fertig? Dann schick's mir rüber.</h2>
     <p class="sub" style="margin-bottom:0">Ein Klick, fertig. Kein E-Mail-Programm nötig – du bleibst einfach hier.</p>
     <div class="knoepfe">
       <button class="btn" id="senden" type="button">An Henrik senden</button>
     </div>
-    <p class="hinweis" id="sende-hinweis">Deine Antworten gehen direkt an Henrik. Deine Eingaben bleiben auf diesem Gerät gespeichert.</p>
     <div id="danke" style="display:none;margin-top:16px;padding:16px 18px;border:1px solid var(--accent);color:var(--accent);font-weight:600;font-size:15px">✓ Danke, Werner! Deine Freigabe ist bei Henrik angekommen. Er meldet sich.</div>
   </div>
 
@@ -370,7 +369,7 @@
       }).then(function (r) { return r.json(); }).then(function (res) {
         if (res && String(res.success) === "true") {
           btn.style.display = "none";
-          hinweis.style.display = "none";
+          if (hinweis) hinweis.style.display = "none";
           danke.style.display = "block";
           danke.scrollIntoView({ behavior: "smooth", block: "center" });
         } else {
