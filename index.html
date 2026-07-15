@@ -297,11 +297,12 @@
 
   <div class="senden">
     <h2>Fertig? Dann zurück an Henrik.</h2>
-    <p class="sub" style="margin-bottom:0">Ein Klick, fertig: öffnet deine E-Mail mit allen Antworten drin.</p>
+    <p class="sub" style="margin-bottom:0">Ein Klick, fertig. Kein E-Mail-Programm nötig – du bleibst einfach hier.</p>
     <div class="knoepfe">
-      <button class="btn" id="mailen" type="button">Per E-Mail an Henrik senden</button>
+      <button class="btn" id="senden" type="button">An Henrik senden</button>
     </div>
-    <p class="hinweis">Geht an hb@diveiac.com. Deine Eingaben bleiben auf diesem Gerät gespeichert.</p>
+    <p class="hinweis" id="sende-hinweis">Deine Antworten gehen direkt an Henrik. Deine Eingaben bleiben auf diesem Gerät gespeichert.</p>
+    <div id="danke" style="display:none;margin-top:16px;padding:16px 18px;border:1px solid var(--accent);color:var(--accent);font-weight:600;font-size:15px">✓ Danke, Werner! Deine Freigabe ist bei Henrik angekommen. Er meldet sich.</div>
   </div>
 
   <footer>
@@ -339,13 +340,47 @@
         "Anzeige 3 (Abend): " + w("a3") + (state.a3_kommentar ? " | " + state.a3_kommentar : "")
       ].join("\n");
     }
-    document.getElementById("mailen").addEventListener("click", function () {
+    function mailFallback() {
       var text = zusammenfassung();
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(function () {}, function () {});
       }
       window.location.href = "mailto:hb@diveiac.com?subject=" +
         encodeURIComponent("Freigabe Villen-Kampagne") + "&body=" + encodeURIComponent(text);
+    }
+
+    var btn = document.getElementById("senden");
+    var danke = document.getElementById("danke");
+    var hinweis = document.getElementById("sende-hinweis");
+    btn.addEventListener("click", function () {
+      var alt = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Wird gesendet …";
+      var payload = {
+        _subject: "Freigabe Villen-Kampagne (Werner)",
+        _template: "table",
+        "Anzeige 1 (Angebot)": w("a1") + (state.a1_kommentar ? " — " + state.a1_kommentar : ""),
+        "Anzeige 2 (Boating)": w("a2") + (state.a2_kommentar ? " — " + state.a2_kommentar : ""),
+        "Anzeige 3 (Winterflucht)": w("a3") + (state.a3_kommentar ? " — " + state.a3_kommentar : "")
+      };
+      fetch("https://formsubmit.co/ajax/hb@diveiac.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload)
+      }).then(function (r) { return r.json(); }).then(function (res) {
+        if (res && String(res.success) === "true") {
+          btn.style.display = "none";
+          hinweis.style.display = "none";
+          danke.style.display = "block";
+          danke.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          throw new Error("nicht erfolgreich");
+        }
+      }).catch(function () {
+        btn.disabled = false;
+        btn.textContent = alt;
+        mailFallback();
+      });
     });
   })();
 </script>
