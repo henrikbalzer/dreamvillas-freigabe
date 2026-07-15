@@ -174,7 +174,7 @@
 
   <div class="kopf">
     <h1>Deine Villen-Kampagne:<br>3 Anzeigen zur Freigabe</h1>
-    <p>Hi Werner, hier siehst du die drei Anzeigen genau so, wie sie beim Scrollen aussehen: links als Facebook-Beitrag, rechts bei Instagram. Am Rechner ist es dieselbe Karte, nur breiter. Es geht nichts live ohne dein Okay: Tipp bei jeder Anzeige „Passt" oder „Bitte ändern", beantworte die kurzen Fragen darunter und schick alles mit einem Knopf zurück.</p>
+    <p>Hi Werner, hier siehst du die drei Anzeigen genau so, wie sie beim Scrollen aussehen: links als Facebook-Beitrag, rechts bei Instagram. Am Rechner ist es dieselbe Karte, nur breiter. Es geht nichts live ohne dein Okay: Tipp bei jeder Anzeige „Passt" oder „Bitte ändern" und schick es unten mit einem Knopf an mich zurück.</p>
     <div class="rahmen">
       <span>ZIELGRUPPE: USA, 30 BIS 70</span>
       <span>ANZEIGEN AUF ENGLISCH</span>
@@ -295,45 +295,13 @@
     </div>
   </section>
 
-  <section>
-    <h2>Fünf kurze Fragen</h2>
-    <p class="sub">Damit in den Anzeigen nichts Falsches steht. Kurze Antworten reichen.</p>
-
-    <div class="frage">
-      <div class="titel">1. Liegen alle drei Villen am Kanal? Sollen wir den Golf-Zugang erwähnen?</div>
-      <input type="text" data-feld="f1" placeholder="z. B. alle am Kanal, Golf-Zugang ja">
-    </div>
-    <div class="frage">
-      <div class="titel">2. Sind die Pools beheizt?</div>
-      <div class="warum">Falls ja, schreiben wir „heated pool", das zieht in den USA.</div>
-      <input type="text" data-feld="f2" placeholder="ja / nein / nur bei ...">
-    </div>
-    <div class="frage">
-      <div class="titel">3. Gibt es die Bootsvermietung für alle drei Villen?</div>
-      <input type="text" data-feld="f3" placeholder="ja / nein / Details">
-    </div>
-    <div class="frage">
-      <div class="titel">4. Gilt „20 % bei Buchung bis 31.8." für jeden Reisezeitraum?</div>
-      <div class="warum">Wenn ja, schreiben wir auf die Bilder „NOW FROM $880/WEEK" statt „FROM $1,100/WEEK".</div>
-      <input type="text" data-feld="f4" placeholder="ja / nein, gilt für ...">
-    </div>
-    <div class="frage">
-      <div class="titel">5. Sollen Buchungen aus der Kampagne über einen Aktionscode laufen, z. B. SUMMER20?</div>
-      <div class="warum">Dann können wir jede Buchung eindeutig der Werbung zuordnen.</div>
-      <input type="text" data-feld="f5" placeholder="ja, SUMMER20 / anderer Code / nein">
-    </div>
-  </section>
-
   <div class="senden">
     <h2>Fertig? Dann zurück an Henrik.</h2>
-    <p class="sub" style="margin-bottom:0">Ein Klick sammelt deine Freigaben und Antworten ein.</p>
+    <p class="sub" style="margin-bottom:0">Ein Klick, fertig: öffnet deine E-Mail mit allen Antworten drin.</p>
     <div class="knoepfe">
-      <button class="btn" id="mailen" type="button">Per E-Mail senden</button>
-      <button class="btn zweit" id="whatsapp" type="button">Per WhatsApp senden</button>
-      <button class="btn zweit" id="kopieren2" type="button">Antwort-Text kopieren</button>
+      <button class="btn" id="mailen" type="button">Per E-Mail an Henrik senden</button>
     </div>
-    <textarea id="antworttext" readonly hidden style="margin-top:12px; min-height:170px; font-family:var(--mono); font-size:13px;"></textarea>
-    <p class="hinweis">Der E-Mail-Knopf öffnet dein Mail-Programm mit fertigem Text an hb@diveiac.com. Falls sich nichts öffnet: „Antwort-Text kopieren" drücken und den Text in eine Mail an hb@diveiac.com einfügen. Deine Eingaben bleiben auf diesem Gerät gespeichert.</p>
+    <p class="hinweis">Geht an hb@diveiac.com. Deine Eingaben bleiben auf diesem Gerät gespeichert.</p>
   </div>
 
   <footer>
@@ -368,13 +336,7 @@
         "",
         "Anzeige 1 (Luftaufnahme): " + w("a1") + (state.a1_kommentar ? " | " + state.a1_kommentar : ""),
         "Anzeige 2 (Boating/Pool): " + w("a2") + (state.a2_kommentar ? " | " + state.a2_kommentar : ""),
-        "Anzeige 3 (Abend): " + w("a3") + (state.a3_kommentar ? " | " + state.a3_kommentar : ""),
-        "",
-        "1. Kanal/Golf-Zugang: " + w("f1"),
-        "2. Pools beheizt: " + w("f2"),
-        "3. Boot für alle Villen: " + w("f3"),
-        "4. 20% für jeden Zeitraum: " + w("f4"),
-        "5. Aktionscode: " + w("f5")
+        "Anzeige 3 (Abend): " + w("a3") + (state.a3_kommentar ? " | " + state.a3_kommentar : "")
       ].join("\n");
     }
     document.getElementById("mailen").addEventListener("click", function () {
@@ -384,32 +346,6 @@
       }
       window.location.href = "mailto:hb@diveiac.com?subject=" +
         encodeURIComponent("Freigabe Villen-Kampagne") + "&body=" + encodeURIComponent(text);
-    });
-    document.getElementById("whatsapp").addEventListener("click", function () {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(zusammenfassung()).then(function () {}, function () {});
-      }
-      window.open("https://wa.me/?text=" + encodeURIComponent(zusammenfassung()), "_blank");
-    });
-    var kn2 = document.getElementById("kopieren2");
-    kn2.addEventListener("click", function () {
-      var text = zusammenfassung();
-      var ta = document.getElementById("antworttext");
-      ta.hidden = false;
-      ta.value = text;
-      ta.select();
-      function ok() {
-        var alt = "Antwort-Text kopieren";
-        kn2.textContent = "Kopiert. Text steht auch unten im Kasten.";
-        setTimeout(function () { kn2.textContent = alt; }, 3000);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(ok, function () {
-          try { document.execCommand("copy"); ok(); } catch (e) {}
-        });
-      } else {
-        try { document.execCommand("copy"); ok(); } catch (e) {}
-      }
     });
   })();
 </script>
