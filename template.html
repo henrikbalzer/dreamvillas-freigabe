@@ -1,0 +1,351 @@
+<title>DreamVillas Kampagne: Freigabe</title>
+<style>
+  :root {
+    --paper: #F4F5F4; --surface: #FFFFFF; --ink: #191C1E; --muted: #5C6468;
+    --line: #E0E3E1; --accent: #C2451A; --accent-soft: #F7E8E1;
+    --ok: #2E7D4F; --ok-soft: #E4F0E9; --warn: #A8720E; --warn-soft: #F6EEDC;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --m1: url("IMG1_PLATZHALTER");
+    --m2: url("IMG2_PLATZHALTER");
+    --m3: url("IMG3_PLATZHALTER");
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #141719; --surface: #1C2023; --ink: #E8EAE7; --muted: #98A1A6;
+      --line: #2A2F32; --accent: #E86A38; --accent-soft: #33231C;
+      --ok: #4CAF7D; --ok-soft: #1C2B23; --warn: #D9A441; --warn-soft: #2C2618;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #F4F5F4; --surface: #FFFFFF; --ink: #191C1E; --muted: #5C6468;
+    --line: #E0E3E1; --accent: #C2451A; --accent-soft: #F7E8E1;
+    --ok: #2E7D4F; --ok-soft: #E4F0E9; --warn: #A8720E; --warn-soft: #F6EEDC;
+  }
+  :root[data-theme="dark"] {
+    --paper: #141719; --surface: #1C2023; --ink: #E8EAE7; --muted: #98A1A6;
+    --line: #2A2F32; --accent: #E86A38; --accent-soft: #33231C;
+    --ok: #4CAF7D; --ok-soft: #1C2B23; --warn: #D9A441; --warn-soft: #2C2618;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    height: auto !important; max-height: none !important; position: static !important;
+    overflow: visible !important; touch-action: auto !important; overscroll-behavior: auto !important;
+  }
+  html { overflow-y: auto !important; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 64px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+  }
+  header {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    padding: 28px 0 20px; border-bottom: 1px solid var(--line);
+  }
+  .brand { font-family: var(--mono); font-weight: 700; font-size: 14px; letter-spacing: .12em; display: flex; align-items: center; gap: 8px; }
+  .brand .mark { width: 11px; height: 11px; background: var(--accent); display: inline-block; }
+  .stand { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  .kopf { padding: 34px 0 6px; }
+  .kopf h1 { font-size: clamp(26px, 5vw, 36px); letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 10px; text-wrap: balance; }
+  .kopf p { color: var(--muted); max-width: 66ch; margin: 0 0 10px; }
+  .rahmen { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .rahmen span {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    border: 1px solid var(--line); padding: 5px 10px; border-radius: 3px; white-space: nowrap;
+  }
+  section { margin-top: 44px; }
+  h2 { font-size: 20px; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .sub { color: var(--muted); font-size: 14.5px; margin: 0 0 20px; max-width: 66ch; }
+
+  .anzeige { background: var(--surface); border: 1px solid var(--line); margin-bottom: 30px; }
+  .anzeige .label {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 700; letter-spacing: .08em;
+    color: var(--accent); padding: 14px 18px 2px;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  }
+  .anzeige .inhalt { padding: 4px 18px 18px; }
+
+  /* Feed-Vorschauen */
+  .vorschau { display: flex; gap: 18px; flex-wrap: wrap; padding: 10px 18px 4px; justify-content: center; }
+  .spalte { flex: 1 1 300px; max-width: 375px; min-width: 280px; }
+  .app-label {
+    font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .07em;
+    color: var(--muted); margin: 8px 0 6px; text-align: center;
+  }
+  .phone {
+    border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+    background: #FFFFFF; color: #050505; box-shadow: 0 1px 8px rgba(0,0,0,.07);
+  }
+  .bild { width: 100%; background-size: cover; background-position: center; }
+  .r43 { aspect-ratio: 1100 / 825; }
+  .r32 { aspect-ratio: 1100 / 733; }
+
+  /* Facebook-Optik */
+  .fb .post-kopf { display: flex; gap: 8px; align-items: center; padding: 10px 12px 6px; }
+  .avatar {
+    width: 38px; height: 38px; border-radius: 50%; flex: 0 0 38px;
+    background: #0E3A53; color: #C99457;
+    display: grid; place-content: center;
+    font-weight: 700; font-size: 14px; letter-spacing: .02em;
+  }
+  .fb .wer b { display: block; font-size: 13.5px; line-height: 1.25; }
+  .fb .wer span { font-size: 11.5px; color: #65676B; }
+  .fb .ptext { font-size: 13.5px; line-height: 1.4; padding: 2px 12px 10px; margin: 0; }
+  .fb .cta-leiste {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    background: #F0F2F5; padding: 10px 12px;
+  }
+  .fb .cta-leiste .links { min-width: 0; }
+  .fb .cta-leiste .url { display: block; font-size: 10.5px; color: #65676B; letter-spacing: .03em; }
+  .fb .cta-leiste b { display: block; font-size: 13.5px; line-height: 1.3; }
+  .fb .cta-leiste .desc { display: block; font-size: 12px; color: #65676B; }
+  .fb .knopf {
+    background: #E4E6EB; color: #050505; font-weight: 600; font-size: 13px;
+    border: none; border-radius: 6px; padding: 8px 14px; white-space: nowrap;
+  }
+  .fb .fuss {
+    display: flex; justify-content: space-around; padding: 8px 6px;
+    border-top: 1px solid #E4E6EB; color: #65676B; font-size: 12px; font-weight: 600;
+  }
+
+  /* Instagram-Optik */
+  .ig .post-kopf { display: flex; gap: 8px; align-items: center; padding: 10px 12px; }
+  .ig .avatar { width: 32px; height: 32px; flex: 0 0 32px; font-size: 11px; }
+  .ig .wer b { display: block; font-size: 13px; line-height: 1.2; }
+  .ig .wer span { font-size: 11px; color: #737373; }
+  .ig .cta-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 12px; font-size: 13.5px; font-weight: 600; color: #0095F6;
+    border-bottom: 1px solid #EFEFEF;
+  }
+  .ig .icons { display: flex; gap: 14px; padding: 10px 12px 4px; font-size: 17px; }
+  .ig .caption { font-size: 13px; line-height: 1.4; padding: 2px 12px 12px; margin: 0; }
+  .ig .caption b { font-weight: 600; }
+
+  .de-block { color: var(--muted); font-size: 13.5px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .de-block i { font-family: var(--mono); font-style: normal; font-size: 11px; letter-spacing: .06em; display: block; margin-bottom: 4px; }
+
+  .wahl { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .wahl label {
+    border: 1px solid var(--line); background: var(--paper); padding: 9px 16px;
+    border-radius: 3px; font-size: 14.5px; font-weight: 600; cursor: pointer; user-select: none;
+  }
+  .wahl input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .wahl label:has(input:checked) { border-color: var(--ok); background: var(--ok-soft); color: var(--ok); }
+  .wahl label.aendern:has(input:checked) { border-color: var(--warn); background: var(--warn-soft); color: var(--warn); }
+  .wahl label:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+  textarea, input[type="text"] {
+    width: 100%; background: var(--paper); border: 1px solid var(--line); color: var(--ink);
+    font: inherit; font-size: 14.5px; padding: 10px 12px; border-radius: 3px; margin-top: 10px;
+  }
+  textarea { min-height: 64px; resize: vertical; }
+  input::placeholder, textarea::placeholder { color: var(--muted); opacity: .7; }
+  .frage { background: var(--surface); border: 1px solid var(--line); padding: 15px 18px; margin-bottom: 10px; }
+  .frage .titel { font-weight: 600; font-size: 15px; }
+  .frage .warum { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .senden { background: var(--surface); border: 1px solid var(--line); padding: 24px 22px; margin-top: 36px; }
+  .senden .knoepfe { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+  .btn {
+    display: inline-block; background: var(--accent); color: #fff; font-weight: 600; font-size: 15px;
+    font-family: var(--sans); padding: 11px 22px; border-radius: 3px; border: none; cursor: pointer;
+  }
+  .btn:hover { filter: brightness(1.07); }
+  .btn.zweit { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .senden .hinweis { color: var(--muted); font-size: 13px; margin: 12px 0 0; }
+  footer {
+    margin-top: 52px; padding-top: 18px; border-top: 1px solid var(--line);
+    font-size: 13px; color: var(--muted);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  footer .brand { font-size: 12px; color: var(--ink); }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="brand">DREAMVILLAS · KAMPAGNEN-FREIGABE</span>
+    <span class="stand">Stand: 15. Juli 2026</span>
+  </header>
+
+  <div class="kopf">
+    <h1>Deine Villen-Kampagne:<br>3 Anzeigen zur Freigabe</h1>
+    <p>Hi Werner, hier siehst du die drei Anzeigen genau so, wie sie beim Scrollen aussehen: links als Facebook-Beitrag, rechts bei Instagram. Am Rechner ist es dieselbe Karte, nur breiter. Es geht nichts live ohne dein Okay: Tipp bei jeder Anzeige „Passt" oder „Bitte ändern" und schick es unten mit einem Knopf an mich zurück.</p>
+    <div class="rahmen">
+      <span>ZIELGRUPPE: USA, 30 BIS 70</span>
+      <span>ANZEIGEN AUF ENGLISCH</span>
+      <span>AKTIONSENDE 31.08.</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="anzeige" data-anzeige="a1">
+      <div class="label"><span>ANZEIGE 1: DAS ANGEBOT</span><span style="color:var(--muted)">Bild: Luftaufnahme mit Kanal und Steg</span></div>
+      <div class="vorschau">
+        <div class="spalte">
+          <div class="app-label">SO SIEHT ES BEI FACEBOOK AUS</div>
+          <div class="phone fb">
+            <div class="post-kopf"><span class="avatar">DV</span><span class="wer"><b>DreamVillas Cape Coral, Florida</b><span>Gesponsert</span></span></div>
+            <p class="ptext">Your own villa in Cape Coral, Florida: private pool, canal on the water side, room for the whole family. Book direct with the owner by August 31 and save 20%.</p>
+            <div class="bild r43" style="background-image:var(--m1)"></div>
+            <div class="cta-leiste">
+              <span class="links"><span class="url">DREAMVILLA-CAPE-CORAL.COM</span><b>20% Off: Book by Aug 31</b><span class="desc">3 waterfront villas, from $1,100/week</span></span>
+              <button class="knopf" type="button">Book Now</button>
+            </div>
+            <div class="fuss"><span>Gefällt mir</span><span>Kommentieren</span><span>Teilen</span></div>
+          </div>
+        </div>
+        <div class="spalte">
+          <div class="app-label">SO BEI INSTAGRAM</div>
+          <div class="phone ig">
+            <div class="post-kopf"><span class="avatar">DV</span><span class="wer"><b>dreamvillascapecoral</b><span>Gesponsert</span></span></div>
+            <div class="bild r43" style="background-image:var(--m1)"></div>
+            <div class="cta-bar"><span>Book Now</span><span>›</span></div>
+            <div class="icons"><span>♡</span><span>💬</span><span>➤</span></div>
+            <p class="caption"><b>dreamvillascapecoral</b> Your own villa in Cape Coral: private pool, canal on the water side, room for the whole family. 20% off until Aug 31.</p>
+          </div>
+        </div>
+      </div>
+      <div class="inhalt">
+        <div class="de-block"><i>AUF DEUTSCH</i>Deine eigene Villa in Cape Coral: privater Pool, Kanal direkt am Haus, Platz für die ganze Familie. Buche direkt beim Eigentümer bis 31. August und spare 20 %.</div>
+        <div class="wahl">
+          <label><input type="radio" name="a1" value="Passt">Passt so</label>
+          <label class="aendern"><input type="radio" name="a1" value="Bitte ändern">Bitte ändern</label>
+        </div>
+        <textarea data-feld="a1_kommentar" placeholder="Anmerkung zu Anzeige 1 (optional)"></textarea>
+      </div>
+    </div>
+
+    <div class="anzeige" data-anzeige="a2">
+      <div class="label"><span>ANZEIGE 2: BOATING</span><span style="color:var(--muted)">Bild: Pool mit Kanalblick</span></div>
+      <div class="vorschau">
+        <div class="spalte">
+          <div class="app-label">SO SIEHT ES BEI FACEBOOK AUS</div>
+          <div class="phone fb">
+            <div class="post-kopf"><span class="avatar">DV</span><span class="wer"><b>DreamVillas Cape Coral, Florida</b><span>Gesponsert</span></span></div>
+            <p class="ptext">Cape Coral is Florida's boating capital: 400 miles of canals, and your villa sits right on one. Private dock at the house, boat rental available, the water starts in your backyard. From $1,100 per week, booked direct with the owner. 20% off if you book by August 31.</p>
+            <div class="bild r32" style="background-image:var(--m2)"></div>
+            <div class="cta-leiste">
+              <span class="links"><span class="url">DREAMVILLA-CAPE-CORAL.COM</span><b>Your Villa. Your Dock. 20% Off.</b><span class="desc">Florida's boating capital, from $1,100/week</span></span>
+              <button class="knopf" type="button">Book Now</button>
+            </div>
+            <div class="fuss"><span>Gefällt mir</span><span>Kommentieren</span><span>Teilen</span></div>
+          </div>
+        </div>
+        <div class="spalte">
+          <div class="app-label">SO BEI INSTAGRAM</div>
+          <div class="phone ig">
+            <div class="post-kopf"><span class="avatar">DV</span><span class="wer"><b>dreamvillascapecoral</b><span>Gesponsert</span></span></div>
+            <div class="bild r32" style="background-image:var(--m2)"></div>
+            <div class="cta-bar"><span>Book Now</span><span>›</span></div>
+            <div class="icons"><span>♡</span><span>💬</span><span>➤</span></div>
+            <p class="caption"><b>dreamvillascapecoral</b> Florida's boating capital: 400 miles of canals, and your villa sits right on one. Private dock, boat rental available. 20% off until Aug 31.</p>
+          </div>
+        </div>
+      </div>
+      <div class="inhalt">
+        <div class="de-block"><i>AUF DEUTSCH</i>Cape Coral ist Floridas Boots-Hauptstadt: 400 Meilen Kanäle, und deine Villa liegt direkt an einem. Eigener Steg am Haus, Boot auf Wunsch dazu, das Wasser beginnt im Garten. Ab 1.100 $ pro Woche, direkt vom Eigentümer gebucht. 20 % Rabatt bei Buchung bis 31. August.</div>
+        <div class="wahl">
+          <label><input type="radio" name="a2" value="Passt">Passt so</label>
+          <label class="aendern"><input type="radio" name="a2" value="Bitte ändern">Bitte ändern</label>
+        </div>
+        <textarea data-feld="a2_kommentar" placeholder="Anmerkung zu Anzeige 2 (optional)"></textarea>
+      </div>
+    </div>
+
+    <div class="anzeige" data-anzeige="a3">
+      <div class="label"><span>ANZEIGE 3: WINTERFLUCHT</span><span style="color:var(--muted)">Bild: Villa Bequia am Abend</span></div>
+      <div class="vorschau">
+        <div class="spalte">
+          <div class="app-label">SO SIEHT ES BEI FACEBOOK AUS</div>
+          <div class="phone fb">
+            <div class="post-kopf"><span class="avatar">DV</span><span class="wer"><b>DreamVillas Cape Coral, Florida</b><span>Gesponsert</span></span></div>
+            <p class="ptext">Florida sun in January beats another gray winter. Lock in your Cape Coral villa now: private pool, water views, space for everyone. Book by August 31 and take 20% off.</p>
+            <div class="bild r32" style="background-image:var(--m3)"></div>
+            <div class="cta-leiste">
+              <span class="links"><span class="url">DREAMVILLA-CAPE-CORAL.COM</span><b>Your Florida Winter Escape</b><span class="desc">From $1,100/week, book direct</span></span>
+              <button class="knopf" type="button">Learn More</button>
+            </div>
+            <div class="fuss"><span>Gefällt mir</span><span>Kommentieren</span><span>Teilen</span></div>
+          </div>
+        </div>
+        <div class="spalte">
+          <div class="app-label">SO BEI INSTAGRAM</div>
+          <div class="phone ig">
+            <div class="post-kopf"><span class="avatar">DV</span><span class="wer"><b>dreamvillascapecoral</b><span>Gesponsert</span></span></div>
+            <div class="bild r32" style="background-image:var(--m3)"></div>
+            <div class="cta-bar"><span>Learn More</span><span>›</span></div>
+            <div class="icons"><span>♡</span><span>💬</span><span>➤</span></div>
+            <p class="caption"><b>dreamvillascapecoral</b> Florida sun in January beats another gray winter. Lock in your villa now, 20% off until Aug 31.</p>
+          </div>
+        </div>
+      </div>
+      <div class="inhalt">
+        <div class="de-block"><i>AUF DEUTSCH</i>Florida-Sonne im Januar schlägt jeden grauen Winter. Sichere dir jetzt deine Villa: privater Pool, Blick aufs Wasser, Platz für alle. Bis 31. August buchen und 20 % sparen.</div>
+        <div class="wahl">
+          <label><input type="radio" name="a3" value="Passt">Passt so</label>
+          <label class="aendern"><input type="radio" name="a3" value="Bitte ändern">Bitte ändern</label>
+        </div>
+        <textarea data-feld="a3_kommentar" placeholder="Anmerkung zu Anzeige 3 (optional)"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <div class="senden">
+    <h2>Fertig? Dann zurück an Henrik.</h2>
+    <p class="sub" style="margin-bottom:0">Ein Klick, fertig: öffnet deine E-Mail mit allen Antworten drin.</p>
+    <div class="knoepfe">
+      <button class="btn" id="mailen" type="button">Per E-Mail an Henrik senden</button>
+    </div>
+    <p class="hinweis">Geht an hb@diveiac.com. Deine Eingaben bleiben auf diesem Gerät gespeichert.</p>
+  </div>
+
+  <footer>
+    <span class="brand">HENRIK BALZER</span>
+    <span>Fragen? Schreib mir: hb@diveiac.com</span>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var KEY = "freigabe_werner_kampagne_v1";
+    var state = {};
+    try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { state = {}; }
+    function speichern() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+    document.querySelectorAll("input[type=radio]").forEach(function (r) {
+      if (state[r.name] === r.value) r.checked = true;
+      r.addEventListener("change", function () {
+        if (r.checked) { state[r.name] = r.value; speichern(); }
+      });
+    });
+    document.querySelectorAll("[data-feld]").forEach(function (f) {
+      var id = f.getAttribute("data-feld");
+      if (state[id]) f.value = state[id];
+      f.addEventListener("input", function () { state[id] = f.value; speichern(); });
+    });
+
+    function w(id, sonst) { var v = String(state[id] || "").trim(); return v ? v : (sonst || "(offen)"); }
+    function zusammenfassung() {
+      return [
+        "DreamVillas Kampagne: Freigabe von Werner",
+        "",
+        "Anzeige 1 (Luftaufnahme): " + w("a1") + (state.a1_kommentar ? " | " + state.a1_kommentar : ""),
+        "Anzeige 2 (Boating/Pool): " + w("a2") + (state.a2_kommentar ? " | " + state.a2_kommentar : ""),
+        "Anzeige 3 (Abend): " + w("a3") + (state.a3_kommentar ? " | " + state.a3_kommentar : "")
+      ].join("\n");
+    }
+    document.getElementById("mailen").addEventListener("click", function () {
+      var text = zusammenfassung();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {}, function () {});
+      }
+      window.location.href = "mailto:hb@diveiac.com?subject=" +
+        encodeURIComponent("Freigabe Villen-Kampagne") + "&body=" + encodeURIComponent(text);
+    });
+  })();
+</script>
